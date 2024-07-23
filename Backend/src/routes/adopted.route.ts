@@ -13,6 +13,6 @@ const router = express.Router();
 router.post("/feed/:pokemonId", authenticateUser, authorizeUser, feedPokemon);
 router.get("/", authenticateUser, getAdoptedPokemon);
 router.get("getById/:pokemonId", authenticateUser, getAdoptedPokemonById);
-router.get("addToAdopt/:pokemonId", authenticateUser, addToAdopted);
+router.post("addToAdopt/:pokemonId", authenticateUser, addToAdopted);
 
 export default router;

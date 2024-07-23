@@ -7,7 +7,7 @@ import { authenticateUser, authorizeUser } from "../middlewares";
 
 const router = express.Router();
 
-router.get("/create", authenticateUser, authorizeUser, createPokemon);
+router.post("/create", authenticateUser, createPokemon);
 router.get("/", getAllPokemon);
 
 export default router;
