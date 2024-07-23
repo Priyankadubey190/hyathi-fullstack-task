@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import Pokemon, { PokemonModel } from "../models/pokemon.model";
 
-const checkPokemonHealth = async () => {
+export const checkPokemonHealth = async () => {
   try {
     const oneMinuteAgo = new Date(Date.now() - 60000);
 

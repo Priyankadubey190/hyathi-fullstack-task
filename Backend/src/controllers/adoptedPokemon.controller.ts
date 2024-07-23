@@ -20,7 +20,7 @@ export const getAdoptedPokemon = async (req: AuthType, res: Response) => {
     const castedUserId = new mongoose.Types.ObjectId(userId.toString());
 
     const adopted = await Adopted.findOne({ userId: castedUserId })
-      .populate("items.product")
+      .populate("items.pokemon")
       .limit(ITEMS_PER_PAGE)
       .skip((+page - 1) * ITEMS_PER_PAGE);
 
@@ -66,8 +66,8 @@ export const getAdoptedPokemonById = async (req: AuthType, res: Response) => {
 export const addToAdopted = async (req: AuthType, res: Response) => {
   try {
     const { pokemonId } = req.params;
-
     const userId = req.currentUser?._id;
+
     if (!userId) {
       return res
         .status(401)
