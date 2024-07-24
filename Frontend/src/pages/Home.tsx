@@ -41,8 +41,17 @@ function Home() {
       setPage(Number(response.data.currentPage));
       setTotalPage(response.data.totalPages);
       setError(null);
-    } catch (err) {
-      setError(err.response?.data?.message || "An error occurred");
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.message || "An error occurred");
+        if (error.response && error.response.status === 500) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+          navigate("/");
+        }
+      } else {
+        setError("An unknown error occurred");
+      }
       setData([]);
     }
   };
@@ -63,6 +72,9 @@ function Home() {
         fetchData();
       })
       .catch((err) => {
+        const errorMessage =
+          err.response?.data?.message || "An error occurred while adopting";
+        alert(errorMessage);
         if (err.response && err.response.status === 500) {
           localStorage.removeItem("token");
           localStorage.removeItem("username");
