@@ -2,28 +2,25 @@ import React from "react";
 import styles from "./pokemonCard.module.scss";
 import { useLocation } from "react-router-dom";
 
-export interface PokemonCardProps {
-  breed: string;
-  healthStatus: number;
-  age: number;
+export interface AdoptedPokemonCardProps {
+  pokemon: {
+    _id: string;
+    breed: string;
+    healthStatus: number;
+    age: number;
+  };
   adopted: boolean;
-  id: string;
 
-  onAdopt?: () => void;
   onFeed?: () => void;
 }
 
-const PokemonCard: React.FC<PokemonCardProps> = ({
-  breed,
-  healthStatus,
-  age,
+export const AdoptedPokemonCard: React.FC<AdoptedPokemonCardProps> = ({
+  pokemon: { breed, healthStatus, age },
   adopted,
-  onAdopt,
   onFeed,
 }) => {
   const location = useLocation();
   const { pathname } = location;
-
   return (
     <div
       className={`${styles.pokemonCard} ${
@@ -42,11 +39,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <span>{age}</span>
           </div>
         </div>
-        {!adopted && (
-          <button className={styles.adoptButton} onClick={onAdopt}>
-            Adopt
-          </button>
-        )}
+
         {adopted && pathname === "/adopted" && (
           <button className={styles.adoptButton} onClick={onFeed}>
             Feed
@@ -56,5 +49,3 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     </div>
   );
 };
-
-export default PokemonCard;

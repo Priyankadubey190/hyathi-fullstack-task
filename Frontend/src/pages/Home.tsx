@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./home.module.scss";
 
 import axios from "axios";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
-  const [data, setData] = useState<PokemonCardProps[]>([]);
+  const [data, setData] = useState([]);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -94,15 +94,15 @@ function Home() {
     <div>
       <div className={styles.pokemonContainer}>
         {data.length > 0 ? (
-          data.map((pokemon) => (
+          data.map((pokemon: PokemonCardProps) => (
             <PokemonCard
               key={pokemon.id}
               breed={pokemon.breed}
               age={pokemon.age}
               healthStatus={pokemon.healthStatus}
-              isAdopted={pokemon.adopted}
+              adopted={pokemon?.adopted}
               id={pokemon.id}
-              onAdopt={() => handleAdopt(pokemon.id)}
+              onAdopt={() => handleAdopt(pokemon?.id)}
             />
           ))
         ) : error ? (

@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
-import PokemonCard from "../component/pokemonCard";
 import { useNavigate } from "react-router-dom";
+import {
+  AdoptedPokemonCard,
+  AdoptedPokemonCardProps,
+} from "../component/adoptedPokemonCard";
 
 function AdoptedPokemon() {
   const navigate = useNavigate();
@@ -24,6 +27,10 @@ function AdoptedPokemon() {
       })
       .catch((error) => {
         console.error("Error fetching adopted Pokemon:", error);
+        const errorMessage =
+          error.response?.data?.message ||
+          "An error occurred while getting adopted pokemon";
+        alert(errorMessage);
         if (error.response && error.response.status === 500) {
           localStorage.removeItem("token");
           localStorage.removeItem("username");
@@ -75,16 +82,13 @@ function AdoptedPokemon() {
       }}
     >
       {data &&
-        data.map((el) => {
+        data.map((el: AdoptedPokemonCardProps) => {
           return (
             <>
-              <PokemonCard
+              <AdoptedPokemonCard
                 key={el?.pokemon?._id}
-                breed={el?.pokemon?.breed}
-                age={el?.pokemon?.age}
-                healthStatus={el?.pokemon?.healthStatus}
-                isAdopted={el?.adopted}
-                _id={el?.pokemon?._id}
+                pokemon={{ ...el.pokemon }}
+                adopted={el.adopted}
                 onFeed={() => onFeed(el.pokemon._id)}
               />
             </>
