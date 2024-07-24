@@ -8,6 +8,6 @@ import { authenticateUser, authorizeUser } from "../middlewares";
 const router = express.Router();
 
 router.post("/create", authenticateUser, createPokemon);
-router.get("/", getAllPokemon);
+router.get("/", authenticateUser, authorizeUser, getAllPokemon);
 
 export default router;
