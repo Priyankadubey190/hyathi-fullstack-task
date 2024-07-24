@@ -6,6 +6,7 @@ import { Loader } from "./component/loader";
 
 const Home = lazy(() => import("./pages/Home"));
 const Registration = lazy(() => import("./component/authForm"));
+const AdoptedPokemon = lazy(() => import("./pages/adoptedPokemon"));
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Registration />} />{" "}
           <Route path="/pokemon" element={<Home />} />{" "}
+          <Route path="/adopted" element={<AdoptedPokemon />} />{" "}
         </Routes>
       </Suspense>
     </Router>

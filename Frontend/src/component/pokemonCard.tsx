@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./pokemonCard.module.scss";
+import { useLocation } from "react-router-dom";
 
-interface PokemonCardProps {
-  name: string;
+export interface PokemonCardProps {
+  breed: string;
   healthStatus: number;
   age: number;
   isAdopted: boolean;
-  onAdopt: () => void;
+  id?: string;
+  _id?: string;
+  onAdopt?: () => void;
+  onFeed?: () => void;
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
-  name,
+  breed,
   healthStatus,
   age,
   isAdopted,
   onAdopt,
+  onFeed,
+  _id,
 }) => {
+  const location = useLocation();
+  const { pathname } = location;
+  if (_id) console.log("_id", _id);
+
   return (
     <div
       className={`${styles.pokemonCard} ${
@@ -23,7 +33,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
       }`}
     >
       <div className={styles.pokemonInfo}>
-        <h3 className={styles.pokemonName}>{name}</h3>
+        <h3 className={styles.pokemonName}>{breed}</h3>
         <div className={styles.pokemonDetails}>
           <div className={styles.healthStatus}>
             <span>Health Status:</span>
@@ -37,6 +47,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
         {!isAdopted && (
           <button className={styles.adoptButton} onClick={onAdopt}>
             Adopt
+          </button>
+        )}
+        {isAdopted && pathname === "/adopted" && (
+          <button className={styles.adoptButton} onClick={onFeed}>
+            Feed
           </button>
         )}
       </div>

@@ -1,15 +1,17 @@
 .pokemonCard {
-  padding: 100px;
+  height: 180px;
+  width: 200px;
+  margin: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &.adopted {
-    background-color: rgba(#f0f0f0, 0.8);
+    background-color: rgba(#9a8080, 0.8);
     backdrop-filter: blur(10px);
   }
 
   &.notAdopted {
-    background-color: #fff;
+    background-color: #226287;
   }
 
   .pokemonInfo {
