@@ -34,7 +34,7 @@ function Home() {
     };
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/pokemon?page=${page}`,
+        `https://hyathi-fullstack-task-backend.onrender.com/api/pokemon?page=${page}`,
         { headers }
       );
       setData(response.data.pokemon);
@@ -59,7 +59,7 @@ function Home() {
   const handleAdopt = (id: string) => {
     axios
       .post(
-        `http://localhost:8080/api/adopt/addToAdopt/${id}`,
+        `https://hyathi-fullstack-task-backend.onrender.com/api/adopt/addToAdopt/${id}`,
         {},
         {
           headers: {

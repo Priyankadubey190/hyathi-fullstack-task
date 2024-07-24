@@ -15,7 +15,9 @@ function AdoptedPokemon() {
     };
 
     axios
-      .get("http://localhost:8080/api/adopt", { headers })
+      .get("https://hyathi-fullstack-task-backend.onrender.com/api/adopt", {
+        headers,
+      })
       .then((response: AxiosResponse) => {
         console.log("www", response.data.items);
         setData(response.data.items);
@@ -33,7 +35,7 @@ function AdoptedPokemon() {
   const onFeed = (id: string) => {
     axios
       .post(
-        `http://localhost:8080/api/adopt/feed/${id}`,
+        `https://hyathi-fullstack-task-backend.onrender.com/api/adopt/feed/${id}`,
         {},
         {
           headers: {

@@ -18,8 +18,8 @@ const AuthForm = () => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const url = isLogin
-      ? "http://localhost:8080/api/auth/login"
-      : "http://localhost:8080/api/auth/signup"; //
+      ? "https://hyathi-fullstack-task-backend.onrender.com/api/auth/login"
+      : "https://hyathi-fullstack-task-backend.onrender.com/api/auth/signup"; //
 
     const formData = {
       username: name,
