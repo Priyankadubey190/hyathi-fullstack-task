@@ -1,0 +1,77 @@
+.authContainer {
+  width: 90%;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  .toggleButton {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Responsive Design
+
+@media (min-width: 600px) {
+  .authContainer {
+    width: 75%;
+  }
+}
+
+@media (min-width: 768px) {
+  .authContainer {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .authContainer {
+    width: 40%;
+  }
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./header.module.scss";
+import { Link } from "react-router-dom";
 
 export const Header: React.FC = () => {
   return (
@@ -9,24 +10,20 @@ export const Header: React.FC = () => {
         <nav className={styles.nav}>
           <ul className={styles.navList}>
             <li className={styles.navItem}>
-              <a href="#" className={styles.navLink}>
-                Login
-              </a>
+              <Link to="/" className={styles.navLink}>
+                Register
+              </Link>
             </li>
+
             <li className={styles.navItem}>
-              <a href="#" className={styles.navLink}>
-                Signup
-              </a>
-            </li>
-            <li className={styles.navItem}>
-              <a href="#" className={styles.navLink}>
+              <Link to="/pokemon" className={styles.navLink}>
                 Pokemon
-              </a>
+              </Link>
             </li>
             <li className={styles.navItem}>
-              <a href="#" className={styles.navLink}>
+              <Link to="/adopted" className={styles.navLink}>
                 Adopted
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
