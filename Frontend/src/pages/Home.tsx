@@ -13,6 +13,8 @@ function Home() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
 
+  const token = localStorage.getItem("token");
+
   const handlePrevPage = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -26,9 +28,14 @@ function Home() {
   };
 
   const fetchData = async () => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/pokemon?page=${page}`
+        `http://localhost:8080/api/pokemon?page=${page}`,
+        { headers }
       );
       setData(response.data.pokemon);
       setPage(Number(response.data.currentPage));
@@ -41,7 +48,6 @@ function Home() {
   };
 
   const handleAdopt = (id: string) => {
-    const token = localStorage.getItem("token");
     axios
       .post(
         `http://localhost:8080/api/adopt/addToAdopt/${id}`,
