@@ -4,7 +4,7 @@ import styles from "./home.module.scss";
 import axios from "axios";
 import PokemonCard, { PokemonCardProps } from "../component/pokemonCard";
 import { Loader } from "../component/loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
@@ -12,9 +12,11 @@ function Home() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  setSearchParams({ page: page.toString() });
   const handlePrevPage = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -28,6 +30,7 @@ function Home() {
   };
 
   const fetchData = async () => {
+    setLoading(true);
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -37,11 +40,15 @@ function Home() {
         `https://hyathi-fullstack-task-backend.onrender.com/api/pokemon?page=${page}`,
         { headers }
       );
+      setLoading(false);
+
       setData(response.data.pokemon);
       setPage(Number(response.data.currentPage));
       setTotalPage(response.data.totalPages);
       setError(null);
     } catch (error: any) {
+      setLoading(false);
+
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.message || "An error occurred");
         if (error.response && error.response.status === 500) {
@@ -69,6 +76,8 @@ function Home() {
         }
       )
       .then(() => {
+        alert("Pokemon is adopted");
+
         fetchData();
       })
       .catch((err) => {
@@ -93,7 +102,7 @@ function Home() {
   return (
     <div>
       <div className={styles.pokemonContainer}>
-        {data.length > 0 ? (
+        {!loading && data.length > 0 ? (
           data.map((pokemon: PokemonCardProps) => (
             <PokemonCard
               key={pokemon.id}

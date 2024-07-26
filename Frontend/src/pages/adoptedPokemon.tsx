@@ -5,10 +5,13 @@ import {
   AdoptedPokemonCard,
   AdoptedPokemonCardProps,
 } from "../component/adoptedPokemonCard";
+import { Loader } from "../component/loader";
 
 function AdoptedPokemon() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const token = localStorage.getItem("token");
 
   const fetchAdoptedPokemon = () => {
@@ -16,17 +19,20 @@ function AdoptedPokemon() {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+    setLoading(true);
 
     axios
       .get("https://hyathi-fullstack-task-backend.onrender.com/api/adopt", {
         headers,
       })
       .then((response: AxiosResponse) => {
-        console.log("www", response.data.items);
+        setLoading(false);
+
         setData(response.data.items);
       })
       .catch((error) => {
-        console.error("Error fetching adopted Pokemon:", error);
+        setLoading(false);
+
         const errorMessage =
           error.response?.data?.message ||
           "An error occurred while getting adopted pokemon";
@@ -53,6 +59,8 @@ function AdoptedPokemon() {
       )
       .then((response: AxiosResponse) => {
         console.log(response);
+        alert("Pokemon is feeded");
+
         fetchAdoptedPokemon();
       })
       .catch((error) => {
@@ -81,7 +89,7 @@ function AdoptedPokemon() {
         margin: "auto",
       }}
     >
-      {data &&
+      {!loading && data ? (
         data.map((el: AdoptedPokemonCardProps) => {
           return (
             <>
@@ -93,7 +101,10 @@ function AdoptedPokemon() {
               />
             </>
           );
-        })}
+        })
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

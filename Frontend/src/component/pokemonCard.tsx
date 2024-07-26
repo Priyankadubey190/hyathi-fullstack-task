@@ -42,11 +42,10 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <span>{age}</span>
           </div>
         </div>
-        {!adopted && (
-          <button className={styles.adoptButton} onClick={onAdopt}>
-            Adopt
-          </button>
-        )}
+        <button className={styles.adoptButton} onClick={onAdopt}>
+          {adopted ? "Already adopt" : "Adopt"}
+        </button>
+
         {adopted && pathname === "/adopted" && (
           <button className={styles.adoptButton} onClick={onFeed}>
             Feed

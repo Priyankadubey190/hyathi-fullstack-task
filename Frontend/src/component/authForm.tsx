@@ -12,6 +12,7 @@ const AuthForm = () => {
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,6 +21,8 @@ const AuthForm = () => {
     const url = isLogin
       ? "https://hyathi-fullstack-task-backend.onrender.com/api/auth/login"
       : "https://hyathi-fullstack-task-backend.onrender.com/api/auth/signup"; //
+
+    setLoading(true);
 
     const formData = {
       username: name,
@@ -30,6 +33,8 @@ const AuthForm = () => {
     axios
       .post(url, formData)
       .then((response) => {
+        setLoading(false);
+
         const { token, username } = response.data;
 
         if (isLogin) {
@@ -43,6 +48,8 @@ const AuthForm = () => {
         setError(null);
       })
       .catch((err) => {
+        setLoading(false);
+
         setError(err.response?.data?.message || "An error occurred");
         setSuccess(null);
       });
@@ -85,7 +92,17 @@ const AuthForm = () => {
         </div>
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.success}>{success}</p>}
-        <button type="submit">{isLogin ? "Login" : "Sign Up"}</button>
+        <button type="submit">
+          {!loading
+            ? isLogin
+              ? "Login"
+              : "Sign Up"
+            : !loading
+            ? !isLogin
+              ? "Sign Up"
+              : "Login"
+            : "...Loading"}
+        </button>
       </form>
       <button
         className={styles.toggleButton}
