@@ -87,6 +87,7 @@ const AuthForm = () => {
             id="password"
             placeholder="Password"
             required
+            maxLength={10}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
