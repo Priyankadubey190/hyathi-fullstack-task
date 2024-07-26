@@ -8,7 +8,7 @@ export interface PokemonCardProps {
   age: number;
   adopted: boolean;
   id: string;
-
+  adoptLoading: boolean;
   onAdopt?: () => void;
   onFeed?: () => void;
 }
@@ -20,6 +20,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   adopted,
   onAdopt,
   onFeed,
+  adoptLoading,
 }) => {
   const location = useLocation();
   const { pathname } = location;
@@ -42,7 +43,14 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <span>{age}</span>
           </div>
         </div>
-        <button className={styles.adoptButton} onClick={onAdopt}>
+        <button
+          className={styles.adoptButton}
+          disabled={adoptLoading}
+          style={{
+            cursor: adoptLoading ? "not-allowed" : "pointer",
+          }}
+          onClick={onAdopt}
+        >
           {adopted ? "Already adopt" : "Adopt"}
         </button>
 

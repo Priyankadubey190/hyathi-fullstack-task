@@ -107,6 +107,8 @@ const AuthForm = () => {
       <button
         className={styles.toggleButton}
         onClick={() => setIsLogin(!isLogin)}
+        disabled={loading}
+        style={{ cursor: loading ? "not-allowed" : "pointer" }}
       >
         {isLogin ? "Switch to Sign Up" : "Switch to Login"}
       </button>

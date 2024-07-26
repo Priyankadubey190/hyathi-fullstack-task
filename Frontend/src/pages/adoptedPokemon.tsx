@@ -11,7 +11,7 @@ function AdoptedPokemon() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [feedLoading, setFeedLoading] = useState(false);
   const token = localStorage.getItem("token");
 
   const fetchAdoptedPokemon = () => {
@@ -46,6 +46,7 @@ function AdoptedPokemon() {
   };
 
   const onFeed = (id: string) => {
+    setFeedLoading(true);
     axios
       .post(
         `https://hyathi-fullstack-task-backend.onrender.com/api/adopt/feed/${id}`,
@@ -58,12 +59,16 @@ function AdoptedPokemon() {
         }
       )
       .then((response: AxiosResponse) => {
+        setFeedLoading(false);
+
         console.log(response);
         alert("Pokemon is feeded");
 
         fetchAdoptedPokemon();
       })
       .catch((error) => {
+        setFeedLoading(false);
+
         console.error("Error feeding Pokemon:", error);
         if (error.response && error.response.status === 500) {
           localStorage.removeItem("token");
@@ -95,6 +100,7 @@ function AdoptedPokemon() {
             <>
               <AdoptedPokemonCard
                 key={el?.pokemon?._id}
+                feedLoading={feedLoading}
                 pokemon={{ ...el.pokemon }}
                 adopted={el.adopted}
                 onFeed={() => onFeed(el.pokemon._id)}

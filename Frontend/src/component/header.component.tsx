@@ -1,8 +1,17 @@
 import React from "react";
 import styles from "./header.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Header: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+
+    navigate("/");
+  };
+
   return (
     <>
       <header className={styles.header}>
@@ -24,6 +33,14 @@ export const Header: React.FC = () => {
               <Link to="/adopted" className={styles.navLink}>
                 Adopted
               </Link>
+            </li>
+            <li
+              className={styles.navItem}
+              style={{ color: "red", fontWeight: "bold" }}
+            >
+              <button onClick={handleLogout} className={styles.navLink}>
+                Logout
+              </button>
             </li>
           </ul>
         </nav>

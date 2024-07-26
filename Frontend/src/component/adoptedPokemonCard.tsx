@@ -10,7 +10,7 @@ export interface AdoptedPokemonCardProps {
     age: number;
   };
   adopted: boolean;
-
+  feedLoading: boolean;
   onFeed?: () => void;
 }
 
@@ -18,6 +18,7 @@ export const AdoptedPokemonCard: React.FC<AdoptedPokemonCardProps> = ({
   pokemon: { breed, healthStatus, age },
   adopted,
   onFeed,
+  feedLoading,
 }) => {
   const location = useLocation();
   const { pathname } = location;
@@ -41,7 +42,14 @@ export const AdoptedPokemonCard: React.FC<AdoptedPokemonCardProps> = ({
         </div>
 
         {adopted && pathname === "/adopted" && (
-          <button className={styles.adoptButton} onClick={onFeed}>
+          <button
+            className={styles.adoptButton}
+            disabled={feedLoading}
+            onClick={onFeed}
+            style={{
+              cursor: feedLoading ? "not-allowed" : "pointer",
+            }}
+          >
             Feed
           </button>
         )}

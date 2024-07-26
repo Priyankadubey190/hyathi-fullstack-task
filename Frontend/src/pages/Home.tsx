@@ -15,7 +15,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [adoptLoading, setAdoptLoading] = useState(false);
   setSearchParams({ page: page.toString() });
   const handlePrevPage = () => {
     if (page > 1) {
@@ -60,10 +60,12 @@ function Home() {
         setError("An unknown error occurred");
       }
       setData([]);
+      console.log(searchParams);
     }
   };
 
   const handleAdopt = (id: string) => {
+    setAdoptLoading(true);
     axios
       .post(
         `https://hyathi-fullstack-task-backend.onrender.com/api/adopt/addToAdopt/${id}`,
@@ -77,10 +79,13 @@ function Home() {
       )
       .then(() => {
         alert("Pokemon is adopted");
+        setAdoptLoading(false);
 
         fetchData();
       })
       .catch((err) => {
+        setAdoptLoading(false);
+
         const errorMessage =
           err.response?.data?.message || "An error occurred while adopting";
         alert(errorMessage);
@@ -106,6 +111,7 @@ function Home() {
           data.map((pokemon: PokemonCardProps) => (
             <PokemonCard
               key={pokemon.id}
+              adoptLoading={adoptLoading}
               breed={pokemon.breed}
               age={pokemon.age}
               healthStatus={pokemon.healthStatus}
