@@ -79,12 +79,24 @@ export const addToAdopted = async (req: AuthType, res: Response) => {
 
     const alreadyAdopted = await Adopted.findOne({
       "items.pokemon": castedPokemonId,
+      userId: !userId,
     });
 
     if (alreadyAdopted) {
       return res
         .status(400)
         .json({ message: "This Pokémon is already adopted by another user." });
+    }
+
+    const alreadyAdoptedByYou = await Adopted.findOne({
+      "items.pokemon": castedPokemonId,
+      userId: userId,
+    });
+
+    if (alreadyAdoptedByYou) {
+      return res
+        .status(400)
+        .json({ message: "This Pokémon is already adopted by you." });
     }
 
     let adopted = await Adopted.findOne({ userId: castedUserId });
