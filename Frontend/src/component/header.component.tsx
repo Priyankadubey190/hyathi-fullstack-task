@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -25,12 +26,12 @@ export const Header: React.FC = () => {
             </li>
 
             <li className={styles.navItem}>
-              <Link to="/pokemon" className={styles.navLink}>
+              <Link to={token ? "/pokemon" : "/"} className={styles.navLink}>
                 Pokemon
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to="/adopted" className={styles.navLink}>
+              <Link to={token ? "/adopted" : "/"} className={styles.navLink}>
                 Adopted
               </Link>
             </li>
