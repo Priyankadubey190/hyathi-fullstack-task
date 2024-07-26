@@ -84,7 +84,7 @@ export const addToAdopted = async (req: AuthType, res: Response) => {
     if (alreadyAdopted) {
       return res
         .status(400)
-        .json({ message: "This Pokémon is already adopted by another user." });
+        .json({ message: "This Pokémon is already adopted." });
     }
 
     let adopted = await Adopted.findOne({ userId: castedUserId });
