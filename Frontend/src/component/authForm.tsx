@@ -93,7 +93,11 @@ const AuthForm = () => {
         </div>
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.success}>{success}</p>}
-        <button type="submit">
+        <button
+          type="submit"
+          disabled={loading}
+          style={{ cursor: loading ? "not-allowed" : "pointer" }}
+        >
           {!loading
             ? isLogin
               ? "Login"
@@ -108,8 +112,6 @@ const AuthForm = () => {
       <button
         className={styles.toggleButton}
         onClick={() => setIsLogin(!isLogin)}
-        disabled={loading}
-        style={{ cursor: loading ? "not-allowed" : "pointer" }}
       >
         {isLogin ? "Switch to Sign Up" : "Switch to Login"}
       </button>
