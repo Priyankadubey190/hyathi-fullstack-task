@@ -16,7 +16,6 @@ function Home() {
   const token = localStorage.getItem("token");
   const [searchParams, setSearchParams] = useSearchParams();
   const [adoptLoading, setAdoptLoading] = useState(false);
-  setSearchParams({ page: page.toString() });
   const handlePrevPage = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -41,6 +40,7 @@ function Home() {
         { headers }
       );
       setLoading(false);
+      setSearchParams({ page: page.toString() });
 
       setData(response.data.pokemon);
       setPage(Number(response.data.currentPage));
