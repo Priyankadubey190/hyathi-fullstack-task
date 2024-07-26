@@ -77,17 +77,6 @@ export const addToAdopted = async (req: AuthType, res: Response) => {
     const castedUserId = new mongoose.Types.ObjectId(userId.toString());
     const castedPokemonId = new mongoose.Types.ObjectId(pokemonId);
 
-    const alreadyAdopted = await Adopted.findOne({
-      "items.pokemon": castedPokemonId,
-      userId: !userId,
-    });
-
-    if (alreadyAdopted) {
-      return res
-        .status(400)
-        .json({ message: "This Pokémon is already adopted by another user." });
-    }
-
     const alreadyAdoptedByYou = await Adopted.findOne({
       "items.pokemon": castedPokemonId,
       userId: userId,
@@ -97,6 +86,17 @@ export const addToAdopted = async (req: AuthType, res: Response) => {
       return res
         .status(400)
         .json({ message: "This Pokémon is already adopted by you." });
+    }
+
+    const alreadyAdopted = await Adopted.findOne({
+      "items.pokemon": castedPokemonId,
+      userId: !userId,
+    });
+
+    if (alreadyAdopted) {
+      return res
+        .status(400)
+        .json({ message: "This Pokémon is already adopted by another user." });
     }
 
     let adopted = await Adopted.findOne({ userId: castedUserId });
